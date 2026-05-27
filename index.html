@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAD月會 - 2026/04~2026/05 工作內容</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #0f0f23 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-size: 1.12rem;
+        }
+
+        /* 頂部導航頁籤 */
+        .nav-tabs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 15px 20px;
+            background: rgba(10, 10, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 25px;
+            color: #8892b0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .nav-tab:hover {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%);
+            color: #ffffff;
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        /* 頁面容器 */
+        .pages-container {
+            padding-top: 80px;
+        }
+
+        /* 每一頁的樣式 */
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .page.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 背景裝飾 */
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(120, 0, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* 封面頁 */
+        .cover-page {
+            text-align: center;
+        }
+
+        .cover-page h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff 0%, #7800ff 50%, #00d4ff 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientMove 3s ease infinite;
+            margin-bottom: 30px;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .cover-page .date-range {
+            font-size: 2rem;
+            color: #8892b0;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .cover-page .subtitle {
+            font-size: 1.5rem;
+            color: #64ffda;
+            margin-bottom: 40px;
+        }
+
+        .cover-page .author {
+            font-size: 2rem;
+            color: #ffffff;
+            padding: 15px 40px;
+            border: 2px solid rgba(0, 212, 255, 0.5);
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        /* 圓餅圖頁面 */
+        .chart-page h2 {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .pie-chart-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+        }
+
+        .pie-chart {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            transform: rotate(-90deg);
+            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
+        }
+
+        .pie-segment {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            clip-path: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .pie-segment:hover {
+            transform: scale(1.05);
+            filter: brightness(1.3);
+        }
+
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+            max-width: 800px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .legend-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(0, 212, 255, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+        }
+
+        .legend-text {
+            font-size: 15px;
+            color: #e0e0e0;
+        }
+
+        .legend-percent {
+            font-size: 15px;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+
+        /* SVG 圓餅圖 */
+        .pie-svg {
+            width: 400px;
+            height: 400px;
+            transform: rotate(-90deg);
+            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.2));
+        }
+
+        .pie-slice {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            stroke: #0a0a1a;
+            stroke-width: 0.5;
+        }
+
+        .pie-slice:hover {
+            filter: brightness(1.3) drop-shadow(0 0 15px currentColor);
+            transform-origin: center;
+        }
+
+        /* 內容頁面 */
+        .content-page h2 {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        .content-page h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+        }
+
+        .work-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+        }
+
+        .work-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 35px;
+            width: 500px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .work-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #00d4ff, #7800ff);
+        }
+
+        .work-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 212, 255, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
+        }
+
+        .work-card h3 {
+            font-size: 1.5rem;
+            color: #64ffda;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .work-card h3::before {
+            content: '▸';
+            color: #00d4ff;
+        }
+
+        .work-percentage {
+            display: inline-block;
+            background: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%);
+            color: #ffffff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .work-content {
+            color: #b0b0b0;
+            line-height: 1.8;
+            font-size: 1.4rem;
+        }
+
+        .work-content strong {
+            color: #e0e0e0;
+        }
+
+        .work-items {
+            margin-top: 15px;
+            padding-left: 20px;
+        }
+
+        .work-items li {
+            margin-bottom: 8px;
+            color: #a0a0a0;
+            position: relative;
+        }
+
+        .work-items li::marker {
+            color: #00d4ff;
+        }
+
+        /* 專案進度條 */
+        .progress-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #e0e0e0;
+            font-weight: 500;
+            font-size: 1.2rem;
+        }
+
+        .progress-label .status {
+            color: #64ffda;
+            font-size: 1.25rem;
+        }
+
+        .progress-label .status.in-progress {
+            color: #ffd93d;
+        }
+
+        .progress-track {
+            flex: 1;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #00d4ff, #00ff88);
+            transition: width 1s ease-out;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .progress-fill.complete {
+            background: linear-gradient(90deg, #00ff88, #64ffda);
+        }
+
+        .progress-fill.in-progress {
+            background: linear-gradient(90deg, #ffd93d, #ff8c42);
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: progressShine 2s ease-in-out infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-percent {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #64ffda;
+            min-width: 55px;
+            text-align: right;
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+        }
+
+        .progress-percent.in-progress {
+            color: #ffd93d;
+            text-shadow: 0 0 10px rgba(255, 217, 61, 0.5);
+        }
+
+        /* 結束頁 */
+        .end-page {
+            text-align: center;
+        }
+
+        .end-page h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff 0%, #7800ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .end-page .thank-you {
+            font-size: 1.5rem;
+            color: #8892b0;
+            margin-bottom: 40px;
+        }
+
+        .end-page .contact-info {
+            font-size: 1.2rem;
+            color: #64ffda;
+            padding: 20px 40px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        /* 頁面裝飾粒子 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00d4ff;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* 進度指示器 */
+        .progress-bar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #7800ff);
+            z-index: 999;
+            transition: width 0.3s ease;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                padding: 10px;
+                gap: 5px;
+            }
+
+            .nav-tab {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .cover-page h1 {
+                font-size: 2.5rem;
+            }
+
+            .cover-page .date-range {
+                font-size: 1.2rem;
+            }
+
+            .work-card {
+                width: 100%;
+                padding: 25px;
+            }
+
+            .pie-svg {
+                width: 300px;
+                height: 300px;
+            }
+
+            .page {
+                padding: 40px 20px;
+            }
+        }
+
+        /* Tooltip 樣式 */
+        .tooltip {
+            position: absolute;
+            background: rgba(10, 10, 26, 0.95);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: 18px 24px;
+            color: #ffffff;
+            font-size: 16px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        .tooltip h4 {
+            color: #00d4ff;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .tooltip span {
+            color: #64ffda;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景粒子 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- 進度條 -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- 導航頁籤 -->
+    <nav class="nav-tabs">
+        <a href="#page1" class="nav-tab active" data-page="1">IAD月會</a>
+        <a href="#page2" class="nav-tab" data-page="2">工作總覽</a>
+        <a href="#page3" class="nav-tab" data-page="3">行政 & 維運</a>
+        <a href="#page4" class="nav-tab" data-page="4">舊模新開 & MA04</a>
+        <a href="#page5" class="nav-tab" data-page="5">雅文BC & 請款</a>
+        <a href="#page6" class="nav-tab" data-page="6">物料預採 & RD07</a>
+        <a href="#page7" class="nav-tab" data-page="7">END</a>
+    </nav>
+
+    <!-- 頁面內容 -->
+    <div class="pages-container">
+        <!-- 第一頁：封面 -->
+        <section id="page1" class="page cover-page visible">
+            <h1>IAD月會</h1>
+            <div class="date-range">2026/04 ~ 2026/05</div>
+            <div class="subtitle">工作內容報告</div>
+            <div class="author">Steven Lin</div>
+        </section>
+
+        <!-- 第二頁：圓餅圖 -->
+        <section id="page2" class="page chart-page">
+            <h2>工作內容分佈</h2>
+            <div class="pie-chart-container">
+                <svg class="pie-svg" viewBox="0 0 100 100" id="pieChart">
+                    <!-- 圓餅圖將由 JavaScript 動態生成 -->
+                </svg>
+                <div class="tooltip" id="tooltip"></div>
+            </div>
+            <div class="chart-legend" id="chartLegend">
+                <!-- 圖例將由 JavaScript 動態生成 -->
+            </div>
+        </section>
+
+        <!-- 第三頁：行政作業 & 日常系統維運 -->
+        <section id="page3" class="page content-page">
+            <h2>行政作業 & 日常系統維運</h2>
+            <div class="work-cards">
+                <div class="work-card">
+                    <h3>行政作業</h3>
+                    <div class="work-percentage">工時佔比：30%</div>
+                    <div class="work-content">
+                        <strong>工作內容：</strong>
+                        <ul class="work-items">
+                            <li>內、外部會議參與與協調</li>
+                            <li>簡報準備與製作</li>
+                            <li>Release Notes 撰寫與發布</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <h3>日常系統維運</h3>
+                    <div class="work-percentage">工時佔比：20%</div>
+                    <div class="work-content">
+                        <strong>工作內容：</strong>
+                        <ul class="work-items">
+                            <li>ITSM 服務單處理</li>
+                            <li>使用者問題回復與支援</li>
+                            <li>單據異常問題排查與處理</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第四頁：舊模新開 & MA04非MRP買料 -->
+        <section id="page4" class="page content-page">
+            <h2>舊模新開 & MA04非MRP買料</h2>
+            <div class="work-cards">
+                <div class="work-card">
+                    <h3>舊模新開</h3>
+                    <div class="work-percentage">工時佔比：20%</div>
+                    <div class="work-content">
+                        <strong>工作內容：</strong>
+                        <ul class="work-items">
+                            <li>流程增加 M 件號關卡</li>
+                            <li>採購需求調整</li>
+                            <li>表單效能優化</li>
+                            <li>結案通知信優化</li>
+                            <li>報表權限卡控優化</li>
+                        </ul>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span>專案進度</span>
+                            <span class="status">完成並上線</span>
+                        </div>
+                        <div class="progress-wrapper">
+                            <div class="progress-track">
+                                <div class="progress-fill complete" style="width: 100%;"></div>
+                            </div>
+                            <span class="progress-percent">100%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <h3>MA04非MRP買料</h3>
+                    <div class="work-percentage">工時佔比：10%</div>
+                    <div class="work-content">
+                        <strong>工作內容：</strong>
+                        <ul class="work-items">
+                            <li>泰國跨公司交易流程優化</li>
+                            <li>跨公司交易邏輯調整</li>
+                        </ul>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span>專案進度</span>
+                            <span class="status">完成並上線</span>
+                        </div>
+                        <div class="progress-wrapper">
+                            <div class="progress-track">
+                                <div class="progress-fill complete" style="width: 100%;"></div>
+                            </div>
+                            <span class="progress-percent">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第五頁：雅文BC & 客戶開改模費請款 -->
+        <section id="page5" class="page content-page">
+            <h2>雅文BC & 客戶開改模費請款</h2>
+            <div class="work-cards">
+                <div class="work-card">
+                    <h3>雅文BC</h3>
+                    <div class="work-percentage">工時佔比：10%</div>
+                    <div class="work-content">
+                        <strong>工作內容：</strong>
+                        <ul class="work-items">
+                            <li>啟動會議後需求整理</li>
+                            <li>需求確認簡報製作</li>
+                        </ul>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span>專案進度</span>
+                            <span class="status in-progress">需求確認會議準備中</span>
+                        </div>
+                        <div class="progress-wrapper">
+                            <div class="progress-track">
+                                <div class="progress-fill in-progress" style="width: 30%;"></div>
+                            </div>
+                            <span class="progress-percent in-progress">30%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <h3>客戶開改模費請款</h3>
+                    <div class="work-percentage">工時佔比：5%</div>
+                    <div class="work-content">
+                        <strong>工作內容：</strong>
+                        <ul class="work-items">
+                            <li>PDF 壓簽名檔用 OCR 優化</li>
+                            <li>文件辨識準確度提升</li>
+                        </ul>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span>專案進度</span>
+                            <span class="status">完成並上線</span>
+                        </div>
+                        <div class="progress-wrapper">
+                            <div class="progress-track">
+                                <div class="progress-fill complete" style="width: 100%;"></div>
+                            </div>
+                            <span class="progress-percent">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第六頁：物料預採申請 & RD07非固資模具與零配件報廢 -->
+        <section id="page6" class="page content-page">
+            <h2>物料預採申請 & RD07報廢流程</h2>
+            <div class="work-cards">
+                <div class="work-card">
+                    <h3>物料預採申請</h3>
+                    <div class="work-percentage">工時佔比：2.5%</div>
+                    <div class="work-content">
+                        <strong>工作內容：</strong>
+                        <ul class="work-items">
+                            <li>完成單顆增強需求測試</li>
+                            <li>功能上線部署</li>
+                            <li>使用者驗收確認</li>
+                        </ul>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span>專案進度</span>
+                            <span class="status">完成並上線</span>
+                        </div>
+                        <div class="progress-wrapper">
+                            <div class="progress-track">
+                                <div class="progress-fill complete" style="width: 100%;"></div>
+                            </div>
+                            <span class="progress-percent">100%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <h3>RD07非固資模具與零配件報廢</h3>
+                    <div class="work-percentage">工時佔比：2.5%</div>
+                    <div class="work-content">
+                        <strong>工作內容：</strong>
+                        <ul class="work-items">
+                            <li>確認鐵管部門簽核主管</li>
+                            <li>泰國流程上線</li>
+                        </ul>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-label">
+                            <span>專案進度</span>
+                            <span class="status">完成並上線</span>
+                        </div>
+                        <div class="progress-wrapper">
+                            <div class="progress-track">
+                                <div class="progress-fill complete" style="width: 100%;"></div>
+                            </div>
+                            <span class="progress-percent">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第七頁：END -->
+        <section id="page7" class="page end-page">
+            <h1>END</h1>
+            <div class="thank-you">感謝聆聽</div>
+            <div class="contact-info">
+                Questions & Discussion
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 圓餅圖數據
+        const chartData = [
+            { name: '行政作業', percent: 30, color: '#6366f1' },
+            { name: '日常系統維運', percent: 20, color: '#22d3ee' },
+            { name: '舊模新開', percent: 20, color: '#a78bfa' },
+            { name: 'MA04非MRP買料', percent: 10, color: '#34d399' },
+            { name: '雅文BC', percent: 10, color: '#f472b6' },
+            { name: '客戶開改模費請款', percent: 5, color: '#fbbf24' },
+            { name: '物料預採申請', percent: 2.5, color: '#fb923c' },
+            { name: 'RD07報廢流程', percent: 2.5, color: '#38bdf8' }
+        ];
+
+        // 生成圓餅圖
+        function createPieChart() {
+            const svg = document.getElementById('pieChart');
+            const tooltip = document.getElementById('tooltip');
+            const legend = document.getElementById('chartLegend');
+            
+            let cumulativePercent = 0;
+
+            chartData.forEach((item, index) => {
+                const startAngle = cumulativePercent * 3.6; // 轉換為角度
+                cumulativePercent += item.percent;
+                const endAngle = cumulativePercent * 3.6;
+
+                // 計算 SVG 路徑
+                const startRad = (startAngle - 90) * Math.PI / 180;
+                const endRad = (endAngle - 90) * Math.PI / 180;
+
+                const x1 = 50 + 45 * Math.cos(startRad);
+                const y1 = 50 + 45 * Math.sin(startRad);
+                const x2 = 50 + 45 * Math.cos(endRad);
+                const y2 = 50 + 45 * Math.sin(endRad);
+
+                const largeArcFlag = item.percent > 50 ? 1 : 0;
+
+                const pathData = `M 50 50 L ${x1} ${y1} A 45 45 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', pathData);
+                path.setAttribute('fill', item.color);
+                path.setAttribute('class', 'pie-slice');
+                path.style.transformOrigin = 'center';
+
+                // Hover 效果
+                path.addEventListener('mouseenter', (e) => {
+                    path.style.transform = 'scale(1.05)';
+                    tooltip.innerHTML = `<h4>${item.name}</h4><span>${item.percent}%</span>`;
+                    tooltip.classList.add('show');
+                });
+
+                path.addEventListener('mousemove', (e) => {
+                    const rect = svg.getBoundingClientRect();
+                    tooltip.style.left = (e.clientX - rect.left + 20) + 'px';
+                    tooltip.style.top = (e.clientY - rect.top - 40) + 'px';
+                });
+
+                path.addEventListener('mouseleave', () => {
+                    path.style.transform = 'scale(1)';
+                    tooltip.classList.remove('show');
+                });
+
+                svg.appendChild(path);
+
+                // 添加圖例
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+                legendItem.innerHTML = `
+                    <div class="legend-color" style="background: ${item.color}"></div>
+                    <span class="legend-text">${item.name}</span>
+                    <span class="legend-percent">${item.percent}%</span>
+                `;
+                
+                legendItem.addEventListener('mouseenter', () => {
+                    path.style.transform = 'scale(1.05)';
+                    path.style.filter = 'brightness(1.3)';
+                });
+                
+                legendItem.addEventListener('mouseleave', () => {
+                    path.style.transform = 'scale(1)';
+                    path.style.filter = 'none';
+                });
+
+                legend.appendChild(legendItem);
+            });
+        }
+
+        // 頁面滾動觀察器
+        function initScrollObserver() {
+            const pages = document.querySelectorAll('.page');
+            const tabs = document.querySelectorAll('.nav-tab');
+            const progressBar = document.getElementById('progressBar');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        // 更新頁籤狀態
+                        const pageId = entry.target.id;
+                        tabs.forEach(tab => {
+                            if (tab.getAttribute('href') === '#' + pageId) {
+                                tab.classList.add('active');
+                            } else {
+                                tab.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            }, {
+                threshold: 0.3,
+                rootMargin: '-80px 0px 0px 0px'
+            });
+
+            pages.forEach(page => observer.observe(page));
+
+            // 滾動進度條
+            window.addEventListener('scroll', () => {
+                const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (window.scrollY / scrollHeight) * 100;
+                progressBar.style.width = scrollPercent + '%';
+            });
+        }
+
+        // 平滑滾動
+        function initSmoothScroll() {
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = tab.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        const offsetTop = targetElement.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // 背景粒子效果
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                
+                const colors = ['#00d4ff', '#7800ff', '#00ff88', '#ff6b6b'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            createPieChart();
+            initScrollObserver();
+            initSmoothScroll();
+            createParticles();
+
+            // 確保第一頁可見
+            document.getElementById('page1').classList.add('visible');
+        });
+
+        // 鍵盤導航
+        document.addEventListener('keydown', (e) => {
+            const tabs = document.querySelectorAll('.nav-tab');
+            const activeTab = document.querySelector('.nav-tab.active');
+            const currentIndex = Array.from(tabs).indexOf(activeTab);
+
+            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                e.preventDefault();
+                if (currentIndex < tabs.length - 1) {
+                    tabs[currentIndex + 1].click();
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                if (currentIndex > 0) {
+                    tabs[currentIndex - 1].click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
